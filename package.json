@@ -1,0 +1,36 @@
+{
+  "name": "lokidiscordbot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.js",
+  "scripts": {
+    "run": "nodemon src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/doxiorekk/LokiDiscordBot.git"
+  },
+  "keywords": [],
+  "author": "doxiorek",
+  "license": "MIT",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/doxiorekk/LokiDiscordBot/issues"
+  },
+  "homepage": "https://github.com/doxiorekk/LokiDiscordBot#readme",
+  "dependencies": {
+    "@prisma/client": "^7.8.0",
+    "@sapphire/framework": "^5.5.0",
+    "@sapphire/plugin-subcommands": "^7.0.1",
+    "discord.js": "^14.26.3",
+    "dotenv": "^17.4.2"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/node": "^25.6.0",
+    "eslint": "^10.2.1",
+    "globals": "^17.5.0",
+    "nodemon": "^3.1.14",
+    "prisma": "^7.8.0"
+  }
+}
