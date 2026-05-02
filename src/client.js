@@ -2,6 +2,7 @@ const {
     SapphireClient,
     ApplicationCommandRegistries,
     RegisterBehavior,
+    container,
 } = require('@sapphire/framework');
 const { GatewayIntentBits } = require('discord.js');
 
