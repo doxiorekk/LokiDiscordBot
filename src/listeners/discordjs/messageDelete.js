@@ -9,7 +9,7 @@ class MessageDeleteListener extends Listener {
         });
     }
 
-    async run(message) {
+    run(message) {
         if (
             message.author.bot ||
             !message.guild ||
