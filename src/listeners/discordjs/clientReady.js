@@ -10,17 +10,15 @@ class ClientReadyListener extends Listener {
     }
 
     async run(client) {
-        this.container.twitch = twitch;
-
         const { username, id } = client.user;
         this.container.logger.info(
             `Successfully logged in as ${username} (${id})`,
         );
         try {
-            await this.container.twitch.init();
+            await twitch.init();
         } catch (error) {
             this.container.logger.error(
-                'Failed to initialize Twitch Client: ',
+                '[Twitch] Failed to initialize Client: ',
                 error,
             );
         }
