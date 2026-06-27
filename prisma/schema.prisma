@@ -14,3 +14,12 @@ model Ticket {
     status    String   @default("OPEN") // Values: OPEN, CLOSED
     createdAt DateTime @default(now())
 }
+
+model VerifiedUser {
+    id        Int      @id @default(autoincrement())
+    userId    String
+    guildId   String
+    createdAt DateTime @default(now())
+
+    @@unique([userId, guildId]) // Prevents duplicate entries
+}

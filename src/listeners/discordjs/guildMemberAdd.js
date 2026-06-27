@@ -6,6 +6,7 @@ const {
     ButtonStyle,
 } = require('discord.js');
 const { welcomeMessages } = require('../../cfg/welcomeMessages.json');
+const { prisma } = require('../../lib/prisma');
 
 class UserJoinListener extends Listener {
     constructor(context, options) {
@@ -17,6 +18,43 @@ class UserJoinListener extends Listener {
     }
 
     async run(member) {
+        // Verification Role Persistance
+        if (process.env.VERIFIED_ROLE_ID) {
+            try {
+                // Check if the rejoining user exists in our database
+                const record = await prisma.VerifiedUser.findUnique({
+                    where: {
+                        userId_guildId: {
+                            userId: member.id,
+                            guildId: guild.id,
+                        },
+                    },
+                });
+
+                // If they are in the database, restore their verification role
+                if (record) {
+                    const role = guild.roles.cache.get(
+                        process.env.VERIFIED_ROLE_ID,
+                    );
+                    if (role) {
+                        await member.roles.add(role);
+                        this.container.logger.info(
+                            `[Verification] Restored role to rejoining user: ${member.user.tag}`,
+                        );
+                    } else {
+                        this.container.logger.warn(
+                            `[Verification] Role ID ${process.env.VERIFIED_ROLE_ID} not found in guild cache.`,
+                        );
+                    }
+                }
+            } catch (error) {
+                this.container.logger.error(
+                    `[Verification] Failed to check/restore role: ${error.message}`,
+                );
+            }
+        }
+
+        // Welcome Message System
         const randomTemplate =
             welcomeMessages[Math.floor(Math.random() * welcomeMessages.length)];
         const randomMessage = randomTemplate.replace(

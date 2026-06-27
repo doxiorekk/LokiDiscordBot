@@ -7,8 +7,8 @@ const discordTranscripts = require('discord-html-transcripts');
 const { prisma } = require('../lib/prisma');
 
 class CloseTicketHandler extends InteractionHandler {
-    constructor(ctx, options) {
-        super(ctx, {
+    constructor(context, options) {
+        super(context, {
             ...options,
             interactionHandlerType: InteractionHandlerTypes.Button,
         });
@@ -105,7 +105,7 @@ class CloseTicketHandler extends InteractionHandler {
             }
         }
 
-        await prisma.ticket.update({
+        await prisma.Ticket.update({
             where: { channelId: interaction.channel.id },
             data: { status: 'CLOSED' },
         });

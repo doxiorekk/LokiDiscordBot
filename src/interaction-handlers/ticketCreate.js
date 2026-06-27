@@ -13,8 +13,8 @@ const {
 const { prisma } = require('../lib/prisma');
 
 class CreateTicketHandler extends InteractionHandler {
-    constructor(ctx, options) {
-        super(ctx, {
+    constructor(context, options) {
+        super(context, {
             ...options,
             interactionHandlerType: InteractionHandlerTypes.Button,
         });
@@ -70,7 +70,7 @@ class CreateTicketHandler extends InteractionHandler {
             ],
         });
 
-        await prisma.ticket.create({
+        await prisma.Ticket.create({
             data: {
                 channelId: ticketChannel.id,
                 guildId: interaction.guild.id,
