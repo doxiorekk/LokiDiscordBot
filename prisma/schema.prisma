@@ -32,3 +32,13 @@ model UserWarn {
 
     @@id([userId, guildId])
 }
+
+model StickyRole {
+    id        Int      @id @default(autoincrement())
+    userId    String
+    guildId   String
+    roleIds   String // Stores role IDs separated by commas (e.g., "123,456,789")
+    updatedAt DateTime @updatedAt
+
+    @@unique([userId, guildId]) // Prevents duplicate rows for the same user in the same server
+}

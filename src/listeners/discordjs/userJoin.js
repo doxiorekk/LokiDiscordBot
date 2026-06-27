@@ -18,28 +18,55 @@ class UserJoinListener extends Listener {
     }
 
     async run(member) {
-        // Verification Role Persistance
+        // Track roles we are going to add to the user
+        const rolesToAdd = new Set();
+
+        // Sticky Roles System
+        try {
+            const savedData = await prisma.stickyRole.findUnique({
+                where: {
+                    userId_guildId: {
+                        userId: member.id,
+                        guildId: member.guild.id,
+                    },
+                },
+            });
+
+            if (savedData && savedData.roleIds) {
+                const savedRoleIds = savedData.roleIds.split(',');
+
+                for (const id of savedRoleIds) {
+                    if (member.guild.roles.cache.has(id)) {
+                        rolesToAdd.add(id);
+                    }
+                }
+            }
+        } catch (error) {
+            this.container.logger.error(
+                `[Sticky Roles] Failed to check/restore roles: ${error.message}`,
+            );
+        }
+
+        // Verified User Checkup System
         if (process.env.VERIFIED_ROLE_ID) {
             try {
-                // Check if the rejoining user exists in our database
                 const record = await prisma.verifiedUser.findUnique({
                     where: {
                         userId_guildId: {
                             userId: member.id,
-                            guildId: guild.id,
+                            guildId: member.guild.id, // Fixed: added member.
                         },
                     },
                 });
 
-                // If they are in the database, restore their verification role
                 if (record) {
-                    const role = guild.roles.cache.get(
+                    const role = member.guild.roles.cache.get(
                         process.env.VERIFIED_ROLE_ID,
-                    );
+                    ); // Fixed: added member.
                     if (role) {
-                        await member.roles.add(role);
+                        rolesToAdd.add(role.id);
                         this.container.logger.info(
-                            `[Verification] Restored role to rejoining user: ${member.user.tag}`,
+                            `[Verification] Found database record for rejoining user: ${member.user.tag}`,
                         );
                     } else {
                         this.container.logger.warn(
@@ -50,6 +77,23 @@ class UserJoinListener extends Listener {
             } catch (error) {
                 this.container.logger.error(
                     `[Verification] Failed to check/restore role: ${error.message}`,
+                );
+            }
+        }
+
+        // Apply all collected roles at once to avoid multiple API calls rate-limits
+        if (rolesToAdd.size > 0) {
+            try {
+                await member.roles.add(
+                    Array.from(rolesToAdd),
+                    'Restored roles from database cache.',
+                );
+                this.container.logger.info(
+                    `[Roles] Successfully applied ${rolesToAdd.size} total roles to ${member.user.tag}`,
+                );
+            } catch (error) {
+                this.container.logger.error(
+                    `[Roles] Failed to apply roles to ${member.id}: ${error.message}`,
                 );
             }
         }
