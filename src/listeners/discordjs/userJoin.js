@@ -6,7 +6,7 @@ const {
     ButtonStyle,
 } = require('discord.js');
 const { welcomeMessages } = require('../../cfg/welcomeMessages.json');
-const { prisma } = require('../../lib/prisma');
+const { prisma } = require('#lib/prisma');
 
 class UserJoinListener extends Listener {
     constructor(context, options) {

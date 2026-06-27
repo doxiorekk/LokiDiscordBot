@@ -4,7 +4,7 @@ const {
 } = require('@sapphire/framework');
 const { EmbedBuilder } = require('discord.js');
 const discordTranscripts = require('discord-html-transcripts');
-const { prisma } = require('../lib/prisma');
+const { prisma } = require('#lib/prisma');
 
 class CloseTicketHandler extends InteractionHandler {
     constructor(context, options) {

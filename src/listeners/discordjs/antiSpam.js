@@ -1,5 +1,5 @@
 const { Listener } = require('@sapphire/framework');
-const { prisma } = require('../../lib/prisma');
+const { prisma } = require('#lib/prisma');
 
 // In memory cache to monitor message frequency
 const messageLog = new Map();

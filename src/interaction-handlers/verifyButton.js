@@ -2,7 +2,7 @@ const {
     InteractionHandler,
     InteractionHandlerTypes,
 } = require('@sapphire/framework');
-const { prisma } = require('../lib/prisma');
+const { prisma } = require('#lib/prisma');
 
 class VerificationButtonHandler extends InteractionHandler {
     constructor(context, options) {

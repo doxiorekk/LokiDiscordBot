@@ -1,5 +1,5 @@
 const { Listener } = require('@sapphire/framework');
-const { twitch } = require('../../lib/twitchClient');
+const { twitch } = require('#lib/twitchClient');
 const {
     EmbedBuilder,
     ActionRowBuilder,

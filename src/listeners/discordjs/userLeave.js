@@ -1,6 +1,6 @@
 const { Listener } = require('@sapphire/framework');
 const { EmbedBuilder } = require('discord.js');
-const { prisma } = require('../../lib/prisma');
+const { prisma } = require('#lib/prisma');
 
 class UserLeaveListener extends Listener {
     constructor(context, options) {

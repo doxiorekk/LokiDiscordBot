@@ -10,7 +10,7 @@ const {
     ButtonBuilder,
     ButtonStyle,
 } = require('discord.js');
-const { prisma } = require('../lib/prisma');
+const { prisma } = require('#lib/prisma');
 
 class CreateTicketHandler extends InteractionHandler {
     constructor(context, options) {
