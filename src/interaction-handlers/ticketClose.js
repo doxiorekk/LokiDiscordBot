@@ -105,7 +105,7 @@ class CloseTicketHandler extends InteractionHandler {
             }
         }
 
-        await prisma.Ticket.update({
+        await prisma.ticket.update({
             where: { channelId: interaction.channel.id },
             data: { status: 'CLOSED' },
         });

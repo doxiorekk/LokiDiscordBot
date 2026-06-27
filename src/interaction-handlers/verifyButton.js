@@ -32,7 +32,7 @@ class VerificationButtonHandler extends InteractionHandler {
 
         try {
             // Upsert ensures they are marked as verified in the DB without throwing duplicates
-            await prisma.VerifiedUser.upsert({
+            await prisma.verifiedUser.upsert({
                 where: {
                     userId_guildId: {
                         userId: member.id,

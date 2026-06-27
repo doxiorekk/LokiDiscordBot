@@ -70,7 +70,7 @@ class CreateTicketHandler extends InteractionHandler {
             ],
         });
 
-        await prisma.Ticket.create({
+        await prisma.ticket.create({
             data: {
                 channelId: ticketChannel.id,
                 guildId: interaction.guild.id,

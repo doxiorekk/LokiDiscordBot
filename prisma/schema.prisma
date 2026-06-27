@@ -23,3 +23,12 @@ model VerifiedUser {
 
     @@unique([userId, guildId]) // Prevents duplicate entries
 }
+
+model UserWarn {
+    userId    String
+    guildId   String
+    warnCount Int      @default(0)
+    updatedAt DateTime @updatedAt
+
+    @@id([userId, guildId])
+}

@@ -22,7 +22,7 @@ class UserJoinListener extends Listener {
         if (process.env.VERIFIED_ROLE_ID) {
             try {
                 // Check if the rejoining user exists in our database
-                const record = await prisma.VerifiedUser.findUnique({
+                const record = await prisma.verifiedUser.findUnique({
                     where: {
                         userId_guildId: {
                             userId: member.id,
