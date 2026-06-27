@@ -5,3 +5,12 @@ generator client {
 datasource db {
     provider = "sqlite"
 }
+
+model Ticket {
+    id        Int      @id @default(autoincrement())
+    channelId String   @unique
+    guildId   String
+    userId    String
+    status    String   @default("OPEN") // Values: OPEN, CLOSED
+    createdAt DateTime @default(now())
+}
